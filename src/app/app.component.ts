@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { selectIsAuth } from './store';
-import { ApplicationState } from './store/application-state.model';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
 	selector: 'app-root',
@@ -10,10 +7,11 @@ import { ApplicationState } from './store/application-state.model';
 	styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent implements OnInit {
-	isAuth$: Observable<boolean>;
-	constructor(private store$: Store<ApplicationState>) {}
+	constructor(private authService: AuthService) {
+		this.authService.autoAuthUser();
+	}
 
-	ngOnInit(): void {
-		this.isAuth$ = this.store$.pipe(select(selectIsAuth));
+	ngOnInit() {
+		this.authService.autoAuthUser();
 	}
 }

@@ -1,17 +1,31 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
 	styleUrls: [ './header.component.scss' ]
 })
-export class HeaderComponent implements OnInit {
-	@Input() isAuth: boolean;
+export class HeaderComponent implements OnInit, OnDestroy {
+	userIsAuthenticated = false;
+	private authListenerSubs: Subscription;
 
-	title = 'Weight Loss Tracker';
-	subTitle = 'Weight to Date';
+	constructor(private authService: AuthService) {}
 
-	constructor() {}
+	ngOnInit() {
+		this.userIsAuthenticated = this.authService.getIsAuth();
+		this.authListenerSubs = this.authService.getAuthStatusListener().subscribe((isAuthenticated) => {
+			this.userIsAuthenticated = isAuthenticated;
+		});
+	}
 
-	ngOnInit(): void {}
+	onLogout() {
+		this.authService.logout();
+	}
+
+	ngOnDestroy() {
+		this.authListenerSubs.unsubscribe();
+	}
 }
