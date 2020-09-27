@@ -1,1 +1,23 @@
-<p>daily-weight-tracker works!</p>
+
+
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <div *ngIf="!isLoading">
+        <p>Please enter the date and your current weight:</p>
+        <hr>
+        <mat-form-field>
+            <input type="date" matInput placeholder="Today's Date" [(ngModel)]="enteredDate">
+        </mat-form-field>
+        
+        <hr>
+        
+        <textarea rows="1" placeholder="Current Weight" [(ngModel)]="enteredWeight"></textarea>
+        <button 
+        mat-raised-button
+        color="primary"
+        (click)="onSaveWeightEntry()">Save</button>
+    </div>  
+    
+</mat-card>
+
+
