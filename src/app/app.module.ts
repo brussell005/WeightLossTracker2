@@ -1,54 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from 'angularfire2';
 
-import { HeaderComponent } from './header/header.component';
 import { AppComponent } from './app.component';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DailyWeightTrackerComponent } from './daily-weight-tracker/daily-weight-tracker.component';
-import { DailyCaloricIntakeComponent } from './daily-caloric-intake/daily-caloric-intake.component';
-import { ExerciseTrackerComponent } from './exercise-tracker/exercise-tracker.component';
-import { WeightListComponent } from './daily-weight-tracker/weight-list/weight-list.component';
-import { HomeComponent } from './home/home.component';
-import { AuthComponent } from './auth/auth.component';
-import { AuthInterceptor } from './auth/auth-interceptor';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { AuthService } from './auth/auth.service';
+import { TrainingService } from './training/training.service';
+import { environment } from '../environments/environment';
+import { UIService } from './shared/ui.service';
+import { AuthModule } from './auth/auth.module';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './app.reducer';
+import { DailyWeightTrackerService } from './daily-weight-tracker/daily-weight-tracker.service';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		HeaderComponent,
-		DailyWeightTrackerComponent,
-		DailyCaloricIntakeComponent,
-		ExerciseTrackerComponent,
-		WeightListComponent,
-		HomeComponent,
-		AuthComponent
-	],
+	declarations: [ AppComponent, WelcomeComponent, HeaderComponent, SidenavListComponent ],
 	imports: [
-		AppRoutingModule,
 		BrowserModule,
-		NgbModule,
-		FormsModule,
+		CommonModule,
 		BrowserAnimationsModule,
-		MatInputModule,
-		MatCardModule,
-		MatButtonModule,
-		MatToolbarModule,
-		MatExpansionModule,
-		MatProgressSpinnerModule,
-		HttpClientModule
+		MaterialModule,
+		AppRoutingModule,
+		FlexLayoutModule,
+		FormsModule,
+		ReactiveFormsModule,
+		AngularFireModule.initializeApp(environment.firebase),
+		AuthModule,
+		AngularFirestoreModule,
+		StoreModule.forRoot(reducers)
 	],
-	providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
+	providers: [ AuthService, TrainingService, UIService, DailyWeightTrackerService ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {}

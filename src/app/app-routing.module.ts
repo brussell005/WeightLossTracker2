@@ -1,22 +1,27 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
-import { DailyWeightTrackerComponent } from './daily-weight-tracker/daily-weight-tracker.component';
-import { WeightListComponent } from './daily-weight-tracker/weight-list/weight-list.component';
-import { HomeComponent } from './home/home.component';
-import { AuthComponent } from './auth/auth.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-	{ path: '', component: HomeComponent },
-	{ path: 'create', component: DailyWeightTrackerComponent },
-	{ path: 'edit/:dayId', component: DailyWeightTrackerComponent },
-	{ path: 'display', component: WeightListComponent },
-	{ path: 'auth', component: AuthComponent }
+	{ path: '', component: WelcomeComponent },
+	{
+		path: 'training',
+		loadChildren: () => import('./training/training.module').then((m) => m.TrainingModule),
+		canLoad: [ AuthGuard ]
+	},
+	{
+		path: 'weighing',
+		loadChildren: () =>
+			import('./daily-weight-tracker/daily-weight-tracker.module').then((m) => m.DailyWeightTrackerModule),
+		canLoad: [ AuthGuard ]
+	}
 ];
 
 @NgModule({
 	imports: [ RouterModule.forRoot(routes) ],
 	exports: [ RouterModule ],
-	providers: []
+	providers: [ AuthGuard ]
 })
 export class AppRoutingModule {}

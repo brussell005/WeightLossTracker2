@@ -1,69 +1,80 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
+import 'rxjs/add/operator/map';
+import { Subscription } from 'rxjs';
+import { UIService } from '../shared/ui.service';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
+import { Router, RouterModule } from '@angular/router';
+
 import { Weight } from './daily-weight-tracker.model';
-import { Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import * as UI from '../shared/ui.actions';
+import * as Weighing from './daily-weight-tracker.actions';
+import * as fromWeighing from './daily-weight-tracker.reducer';
+import { Observable } from 'rxjs';
+import { DataSource } from '@angular/cdk/table';
 
-@Injectable({ providedIn: 'root' })
-export class WeightTrackerService {
-	private weighIns: Weight[] = [];
-	private weighInsUpdated = new Subject<Weight[]>();
+@Injectable()
+export class DailyWeightTrackerService {
+	private fbSubs: Subscription[] = [];
+	_db: AngularFirestore;
+	weighIn: Observable<any[]>;
+	isLoading = false;
 
-	constructor(private http: HttpClient, private router: Router) {}
+	constructor(
+		private db: AngularFirestore,
+		private uiService: UIService,
+		private store: Store<fromWeighing.State>,
+		private router: Router
+	) {
+		this.weighIn = db.collection('dailyWeighIns').valueChanges();
+		this._db = db;
+	}
 
-	getweighIns() {
-		this.http
-			.get<{ message: string; weighIns: any }>('http://localhost:3000/api/posts')
-			.pipe(
-				map((postData) => {
-					return postData.weighIns.map((weighIns) => {
+	fetchAvailableWeighIns() {
+		this.store.dispatch(new UI.StartLoading());
+		this.fbSubs.push(
+			this.db
+				.collection('dailyWeighIns')
+				.snapshotChanges()
+				.map((docArray) => {
+					return docArray.map((doc) => {
 						return {
-							date: weighIns.date,
-							weight: weighIns.weight,
-							id: weighIns._id
+							id: doc.payload.doc.id,
+							date: doc.payload.doc.data()['date'],
+							weight: doc.payload.doc.data()['weight'],
+
 						};
 					});
 				})
-			)
-			.subscribe((transformedWeighIns) => {
-				this.weighIns = transformedWeighIns;
-				this.weighInsUpdated.next([ ...this.weighIns ]);
-			});
+				.subscribe(
+					(weights: Weight[]) => {
+						this.store.dispatch(new UI.StopLoading());
+						this.store.dispatch(new Weighing.SetWeighIns(weights));
+					},
+					(error) => {
+						this.store.dispatch(new UI.StopLoading());
+						this.uiService.showSnackbar('Fetching Weigh-Ins Failed, Try again', null, 3000);
+					}
+				)
+		);
 	}
 
-	getWeighInsUpdateListener() {
-		return this.weighInsUpdated.asObservable();
+	cancelSubscriptions() {
+		this.fbSubs.forEach((sub) => sub.unsubscribe());
 	}
 
-	getWeighIn(id: string) {
-		return { ...this.weighIns.find((weight) => weight.id === id) };
+
+	addweighIns(enteredDate: string, enteredWeight: string) {
+		this.isLoading = true;
+		this.db.collection<Weight>('dailyWeighIns').add({ id: null, date: enteredDate, weight: enteredWeight });
 	}
 
-	addweighIns(date: string, weight: string) {
-		const weighIn: Weight = { id: null, date: date, weight: weight };
-		this.http
-			.post<{ message: string; weighInId: string }>('http://localhost:3000/api/posts', weighIn)
-			.subscribe((responseData) => {
-				const id = responseData.weighInId;
-				weighIn.id = id;
-				this.weighIns.push(weighIn);
-				this.weighInsUpdated.next([ ...this.weighIns ]);
-				this.router.navigate([ '/display' ]);
-			});
-	}
-
-	updateweighIns(id: string, date: string, weight: string) {
-		const weighIn: Weight = { id: id, date: date, weight: weight };
-		this.http.put('http://localhost:3000/api/posts/' + id, weighIn).subscribe((response) => console.log(response));
-		this.router.navigate([ '/display' ]);
-	}
-
-	deleteweighIns(weighInsId: string) {
-		this.http.delete('http://localhost:3000/api/posts/' + weighInsId).subscribe(() => {
-			const updatedWeighIns = this.weighIns.filter((weighIns) => weighIns.id !== weighInsId);
-			this.weighIns = updatedWeighIns;
-			this.weighInsUpdated.next([ ...this.weighIns ]);
-		});
+	deleteweighIns(deleteId: string) {
+		this.isLoading = true;
+		this._db.collection('dailyWeighIns').doc("deleteId").delete().then(function () {
+			console.log("Document successfully deleted!");
+			console.log(deleteId);
+		})
 	}
 }
