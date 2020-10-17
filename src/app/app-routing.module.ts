@@ -9,19 +9,25 @@ const routes: Routes = [
 	{
 		path: 'training',
 		loadChildren: () => import('./training/training.module').then((m) => m.TrainingModule),
-		canLoad: [ AuthGuard ]
+		canLoad: [AuthGuard]
 	},
 	{
 		path: 'weighing',
 		loadChildren: () =>
 			import('./daily-weight-tracker/daily-weight-tracker.module').then((m) => m.DailyWeightTrackerModule),
-		canLoad: [ AuthGuard ]
+		canLoad: [AuthGuard]
+	},
+	{
+		path: 'counting',
+		loadChildren: () =>
+			import('./daily-calorie-tracker/daily-calorie-tracker.module').then((m) => m.DailyCalorieTrackerModule),
+		canLoad: [AuthGuard]
 	}
 ];
 
 @NgModule({
-	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ],
-	providers: [ AuthGuard ]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
+	providers: [AuthGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

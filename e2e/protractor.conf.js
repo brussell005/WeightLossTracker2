@@ -1,36 +1,48 @@
 // @ts-check
 // Protractor configuration file, see link for more information
-// https://github.com/angular/protractor/blob/master/lib/config.ts
+// https://www.amadousall.com/angular-e2e-with-cucumber/
 
-const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
+const reporter = require("cucumber-html-reporter");
+const exec = require("shelljs.exec");
 
 /**
  * @type { import("protractor").Config }
  */
 exports.config = {
   allScriptsTimeout: 11000,
-  specs: [
-    './src/**/*.e2e-spec.ts'
-  ],
+  specs: ["./src/features/**/*.feature"],
+  framework: "custom",
+  frameworkPath: require.resolve("protractor-cucumber-framework"),
+  cucumberOpts: {
+    require: ["./src/steps/**/*.steps.ts"],
+    tags: ["@FE"],
+    format: `json:${__dirname}/coverage/results.json`,
+  },
   capabilities: {
-    browserName: 'chrome'
+    browserName: "chrome",
   },
+  restartBrowserBetweenTests: true,
   directConnect: true,
-  baseUrl: 'http://localhost:4200/',
-  framework: 'jasmine',
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 30000,
-    print: function() {}
-  },
+  baseUrl: "http://localhost:4200/",
   onPrepare() {
-    require('ts-node').register({
-      project: require('path').join(__dirname, './tsconfig.json')
+    require("ts-node").register({
+      project: require("path").join(__dirname, "./tsconfig.e2e.json"),
     });
-    jasmine.getEnv().addReporter(new SpecReporter({
-      spec: {
-        displayStacktrace: StacktraceOption.PRETTY
-      }
-    }));
-  }
+  },
+  beforeLaunch() {
+    exec(`mkdir -p ${__dirname}/coverage && rm -rf ${__dirname}/coverage/*`);
+  },
+  onCleanUp() {
+    console.log("Completed! Generating the test result report /e2e/coverage/");
+    const options = {
+      theme: "bootstrap",
+      jsonFile: `${__dirname}/coverage/results.json`,
+      output: `${__dirname}/coverage/index.html`,
+      reportSuiteAsScenarios: true,
+      scenarioTimestamp: true,
+      ignoreBadJsonFile: true,
+      launchReport: true,
+    };
+    reporter.generate(options);
+  },
 };

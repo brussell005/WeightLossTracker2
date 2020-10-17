@@ -20,17 +20,17 @@ export class AuthService {
 		private snackbar: MatSnackBar,
 		private uiService: UIService,
 		private store: Store<fromRoot.State>
-	) {}
+	) { }
 
 	initAuthListener() {
 		this.afauth.authState.subscribe((user) => {
 			if (user) {
 				this.store.dispatch(new Auth.SetAuthenticated());
-				this.router.navigate([ '/training' ]);
+				this.router.navigate(['/weighing']);
 			} else {
 				this.trainingService.cancelSubscriptions();
 				this.store.dispatch(new Auth.SetUnauthenticated());
-				this.router.navigate([ '/login' ]);
+				this.router.navigate(['/login']);
 			}
 		});
 	}

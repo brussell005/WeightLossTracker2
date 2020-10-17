@@ -4,14 +4,15 @@
             <mat-icon>menu</mat-icon>
         </button>
     </div>
-    <div><a routerLink='/'>Weight Loss App</a></div>
+    <div><a routerLink='/'><img src="assets/img/mylogosmall.png"></a></div>
     <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-        <ul fxLayout  fxLayoutGap="10px" class="navigation-items">
-            <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup">Signup</a></li>
+        <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+            <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup">Signup |</a></li>
             <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Login</a></li>
-            <li *ngIf="isAuth$ | async"><a routerLink="/training">Training</a></li>
-            <li *ngIf="isAuth$ | async"><a routerLink="/weighing">WeightLossTracker</a></li>
+            <li *ngIf="isAuth$ | async"><a routerLink="/weighing">WeightLossTracker |</a></li>
+            <li *ngIf="isAuth$ | async"><a routerLink="/training">ExerciseTracker |</a></li>
+            <li *ngIf="isAuth$ | async"><a routerLink="/counting">CalorieTracker |</a></li>
             <li *ngIf="isAuth$ | async"><a style="cursor: pointer" (click)="onLogout()">Logout</a></li>
-        </ul> 
+        </ul>
     </div>
 </mat-toolbar>

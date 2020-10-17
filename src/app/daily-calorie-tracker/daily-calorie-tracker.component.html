@@ -1,7 +1,7 @@
 <mat-card>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <div *ngIf="!isLoading">
-        <p>Please enter the date and your current weight:</p>
+        <p>Please enter the date and your calories consumed:</p>
         <hr>
         <mat-form-field>
             <input matInput type="date" matInput placeholder="Today's Date" [(ngModel)]="enteredDate">
@@ -9,19 +9,19 @@
 
         <hr>
 
-        <textarea matInput rows="1" placeholder="Current Weight" [(ngModel)]="enteredWeight"></textarea>
-
-        <button mat-raised-button color="primary" (click)="onSaveWeightEntry(enteredDate, enteredWeight)">Save</button>
+        <textarea matInput rows="1" placeholder="Calories Consumed" [(ngModel)]="enteredCalories"></textarea>
+        <button mat-raised-button color="primary"
+            (click)="onSaveWeightEntry(enteredDate, enteredCalories)">Save</button>
     </div>
-
 
 </mat-card>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
     <mat-divider fxFlex="1 0"></mat-divider>
-    <div>PreviousWeights</div>
+    <div>PreviousCalories</div>
     <mat-divider fxFlex="1 0"></mat-divider>
 </div>
+
 
 <mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="date">
@@ -29,25 +29,23 @@
         <mat-cell *matCellDef="let element">{{ element.date | date }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="weight">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Weight</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.weight | number }}</mat-cell>
+    <ng-container matColumnDef="calories">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.calories | number }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.id  }}</mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
     </ng-container>
-
-
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
 </mat-table>
-
 <mat-paginator #paginator [pageSize]="3" [pageSizeOptions]="[5, 10, 15]">
 </mat-paginator>
+
 
 <div *ngIf="!isLoading">
     <p>If you are sure you want to delete a Weigh-In Entry, please enter it's id below:</p>

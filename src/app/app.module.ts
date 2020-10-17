@@ -21,9 +21,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
 import { DailyWeightTrackerService } from './daily-weight-tracker/daily-weight-tracker.service';
+import { DailyCalorieTrackerService } from './daily-calorie-tracker/daily-calorie-tracker-service';
 
 @NgModule({
-	declarations: [ AppComponent, WelcomeComponent, HeaderComponent, SidenavListComponent ],
+	declarations: [AppComponent, WelcomeComponent, HeaderComponent, SidenavListComponent],
 	imports: [
 		BrowserModule,
 		CommonModule,
@@ -38,7 +39,7 @@ import { DailyWeightTrackerService } from './daily-weight-tracker/daily-weight-t
 		AngularFirestoreModule,
 		StoreModule.forRoot(reducers)
 	],
-	providers: [ AuthService, TrainingService, UIService, DailyWeightTrackerService ],
-	bootstrap: [ AppComponent ]
+	providers: [AuthService, TrainingService, UIService, DailyWeightTrackerService, DailyCalorieTrackerService],
+	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

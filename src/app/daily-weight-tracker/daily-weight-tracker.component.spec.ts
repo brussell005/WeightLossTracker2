@@ -8,9 +8,9 @@ describe('DailyWeightTrackerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DailyWeightTrackerComponent ]
+      declarations: [DailyWeightTrackerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

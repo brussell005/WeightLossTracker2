@@ -13,6 +13,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import * as UI from '../shared/ui.actions';
 import * as Weighing from './daily-weight-tracker.actions';
+import { FormControl, FormGroup } from "@angular/forms";
 
 
 @Component({
@@ -33,6 +34,7 @@ export class DailyWeightTrackerComponent implements OnInit {
 	displayedColumns = ['date', 'weight', 'id'];
 	dataSource = new MatTableDataSource<Weight>();
 	private weighInsSub: Subscription;
+
 
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -57,6 +59,7 @@ export class DailyWeightTrackerComponent implements OnInit {
 	onSaveWeightEntry() {
 		this.isLoading = true;
 		this.dailyweighttrackerservice.addweighIns(this.enteredDate, this.enteredWeight);
+		this.isLoading = false;
 	}
 	ngAfterViewInit() {
 		this.dataSource.sort = this.sort;
@@ -68,16 +71,9 @@ export class DailyWeightTrackerComponent implements OnInit {
 		this.dailyweighttrackerservice.deleteweighIns(this.deleteId);
 	}
 
-	ngOnDestroy() {
-		this.weighInsSub.unsubscribe();
-	}
+
 	doFilter(filterValue: string) {
 		this.dataSource.filter = filterValue.trim().toLowerCase();
 	}
 
-	/*onSaveWeightEntry(enteredDate: string, enteredWeight: string) {
-		this.isLoading = true;
-		let addWeighIn = this._db.collection<Weight>('dailyWeighIns');
-		addWeighIn.add({ id: null, date: enteredDate, weight: enteredWeight });
-	}*/
 }

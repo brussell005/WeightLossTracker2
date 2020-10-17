@@ -1,27 +1,38 @@
-# ExerciseTracker
+# Brien's Weight Loss Tracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.4.
+I created this Weight Loss Tracker as a way of keeping track of my weight loss journey. It is intended for my personal use, but anyone is welcome to give it a go. It isn't very complex, but it has helped me to learn Angular. 
 
-## Development server
+## Components included:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+-- Weight Loss Tracker: Allows you to enter a date and a current weight.
+-- Exercise Tracker: Allows you to select from 4 (currently) different exercises and start a timer. Previous excersises will be displayed and calories burned will be tracked.
+-- Calorie Tracker: Allows you to enter a date and daily calories consumed. 
 
-## Code scaffolding
+## Technologies Utilized: 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Angular
+* Firebase Authentication
+* Cloud Firestore (Database)
+* Angular Materials 
+* Custom Angular Theme
+* NgRx
+* Reactive Forms
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Setup:
 
-## Running unit tests
+^^ Clone the repository for week 7 branch
+^^ Run npm install 
+^^ Go to localhost:4200 in Chrome
+^^ Signup with whatever fake credentials you want.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+**** Or got to the link below *********
 
-## Running end-to-end tests
+https://weightlossapp-fb487.firebaseapp.com/
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+-- I tried this link from my phone and it appears to be working correctly. 
 
-## Further help
+In Progress:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+%% I am currently working on Unit Testing and e2e coverage.
+%% I didn't actually use the delete button in my video, but did from my phone and it was not working properly. So that will be my priority fix. 

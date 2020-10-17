@@ -9,12 +9,20 @@
     </a>
     <a mat-list-item routerLink="/training" (click)="onClose()" *ngIf="isAuth$ | async">
         <mat-icon>directions_run</mat-icon>
-        <span class="nav-caption">Training</span>
+        <span class="nav-caption">ExerciseTracker</span>
+    </a>
+    <a mat-list-item routerLink="/weighing" (click)="onClose()" *ngIf="isAuth$ | async">
+        <mat-icon>trending_down</mat-icon>
+        <span class="nav-caption">WeightLossTracker</span>
+    </a>
+    <a mat-list-item routerLink="/counting" (click)="onClose()" *ngIf="isAuth$ | async">
+        <mat-icon>restaurant</mat-icon>
+        <span class="nav-caption">CalorieTracker</span>
     </a>
     <mat-list-item>
         <button mat-icon-button (click)="onLogout()" *ngIf="isAuth$ | async">
             <mat-icon>eject</mat-icon>
-            <span class="nav-caption">Logout</span>            
+            <span class="nav-caption">Logout</span>
         </button>
     </mat-list-item>
 </mat-nav-list>
