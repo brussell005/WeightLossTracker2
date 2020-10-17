@@ -21,7 +21,7 @@ I created this Weight Loss Tracker as a way of keeping track of my weight loss j
 
 ## Setup:
 
-^^ Clone the repository for week 7 branch
+^^ Clone the repository for week 7 branch (m7)
 ^^ Run npm install 
 ^^ Go to localhost:4200 in Chrome
 ^^ Signup with whatever fake credentials you want.
