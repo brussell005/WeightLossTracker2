@@ -10,13 +10,13 @@ import { map } from 'rxjs/operators';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: [ './login.component.scss' ]
+	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 	loginForm: FormGroup;
 	isLoading$: Observable<boolean>;
 
-	constructor(private authService: AuthService, private uiService: UIService, private store: Store<fromRoot.State>) {}
+	constructor(private authService: AuthService, private uiService: UIService, private store: Store<fromRoot.State>) { }
 
 	ngOnInit() {
 		this.isLoading$ = this.store.select(fromRoot.getIsLoading);
@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
 		//});
 
 		this.loginForm = new FormGroup({
-			email: new FormControl('', { validators: [ Validators.required, Validators.email ] }),
-			password: new FormControl('', { validators: [ Validators.required ] })
+			email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+			password: new FormControl('', { validators: [Validators.required] })
 		});
 	}
 
@@ -36,10 +36,4 @@ export class LoginComponent implements OnInit {
 			password: this.loginForm.value.password
 		});
 	}
-
-	//ngOnDestroy() {
-	//if (this.loadingSubs) {
-	//	this.loadingSubs.unsubscribe();
-	//}
-	//}
 }

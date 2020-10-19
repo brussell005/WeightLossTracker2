@@ -1,4 +1,4 @@
-import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { CaloriesInActions, SET_CALORIESIN } from './daily-calorie-tracker.actions';
 import { Calories } from './daily-calorie-tracker.model';

@@ -2,18 +2,16 @@ import { DailyWeightTrackerService } from './daily-weight-tracker.service';
 import { Store } from '@ngrx/store';
 import * as fromWeighing from './daily-weight-tracker.reducer';
 import { Weight } from './daily-weight-tracker.model';
-import { ParamMap } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UIService } from '../shared/ui.service';
 import { Subscription } from 'rxjs';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import * as UI from '../shared/ui.actions';
-import * as Weighing from './daily-weight-tracker.actions';
-import { FormControl, FormGroup } from "@angular/forms";
+
 
 
 @Component({

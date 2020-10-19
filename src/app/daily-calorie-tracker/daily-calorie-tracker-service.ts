@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import { Subscription } from 'rxjs';
 import { UIService } from '../shared/ui.service';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
 import { Router, RouterModule } from '@angular/router';
 
 import { Calories } from './daily-calorie-tracker.model';
@@ -12,7 +11,7 @@ import * as UI from '../shared/ui.actions';
 import * as Counting from './daily-calorie-tracker.actions';
 import * as fromCounting from './daily-calorie-tracker.reducer';
 import { Observable } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
+
 
 @Injectable()
 export class DailyCalorieTrackerService {

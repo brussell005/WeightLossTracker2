@@ -9,13 +9,13 @@ import { Store } from '@ngrx/store';
 @Component({
 	selector: 'app-signup',
 	templateUrl: './signup.component.html',
-	styleUrls: [ './signup.component.scss' ]
+	styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
 	maxDate;
 	isLoading$: Observable<boolean>;
 
-	constructor(private authService: AuthService, private uiService: UIService, private store: Store<fromRoot.State>) {}
+	constructor(private authService: AuthService, private uiService: UIService, private store: Store<fromRoot.State>) { }
 
 	ngOnInit() {
 		this.isLoading$ = this.store.select(fromRoot.getIsLoading);

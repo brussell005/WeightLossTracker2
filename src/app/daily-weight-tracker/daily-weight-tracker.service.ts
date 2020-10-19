@@ -4,15 +4,15 @@ import 'rxjs/add/operator/map';
 import { Subscription } from 'rxjs';
 import { UIService } from '../shared/ui.service';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
-import { Router, RouterModule } from '@angular/router';
+
+import { Router } from '@angular/router';
 
 import { Weight } from './daily-weight-tracker.model';
 import * as UI from '../shared/ui.actions';
 import * as Weighing from './daily-weight-tracker.actions';
 import * as fromWeighing from './daily-weight-tracker.reducer';
 import { Observable } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
+
 
 @Injectable()
 export class DailyWeightTrackerService {

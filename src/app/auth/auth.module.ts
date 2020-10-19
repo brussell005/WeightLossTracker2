@@ -9,7 +9,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
-	declarations: [ SignupComponent, LoginComponent ],
+	declarations: [SignupComponent, LoginComponent],
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -21,4 +21,4 @@ import { AuthRoutingModule } from './auth-routing.module';
 	],
 	exports: []
 })
-export class AuthModule {}
+export class AuthModule { }

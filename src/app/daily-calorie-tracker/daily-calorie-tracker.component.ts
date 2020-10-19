@@ -2,18 +2,15 @@ import { DailyCalorieTrackerService } from './daily-calorie-tracker-service';
 import { Store } from '@ngrx/store';
 import * as fromCounting from './daily-calorie-tracker.reducer';
 import { Calories } from './daily-calorie-tracker.model';
-import { ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UIService } from '../shared/ui.service';
 import { Subscription } from 'rxjs';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import * as UI from '../shared/ui.actions';
-import * as Counting from './daily-calorie-tracker.actions';
-import { FormControl, FormGroup } from "@angular/forms";
+
 
 
 @Component({

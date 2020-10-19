@@ -1,4 +1,4 @@
-import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { WeighInActions, SET_WEIGHINS } from './daily-weight-tracker.actions';
 import { Weight } from './daily-weight-tracker.model';
